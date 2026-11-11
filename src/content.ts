@@ -83,7 +83,7 @@ export const content = {
   /** Vista final: aparece al soplar la vela, con un amanecer de fondo. */
   finale: {
     label: 'Mi deseo para ti',
-    wish: 'Deseo que nunca te sientas sola, aunque a veces parezca que el mundo se viene abajo. Que cuando todo te confunda, encuentres el camino de vuelta a ti. Que yo pueda seguir cuidándote, aunque sea desde lejos, y que si algún día me pierdo, seas tú quien me recuerde quién era. Y que tus 17 te den tantas razones para sonreír que nunca más tenga que verte triste.',
+    wish: 'Deseo que nunca te sientas sola, aunque a veces el mundo se venga abajo. Que yo pueda seguir cuidándote, aunque sea desde lejos. Y si algún día me pierdo y olvido quién soy, que seas tú quien me recuerde quién era. Que tus 17 te devuelvan cada sonrisa que el mundo te quitó.',
     back: 'Volver a la carta',
   },
 

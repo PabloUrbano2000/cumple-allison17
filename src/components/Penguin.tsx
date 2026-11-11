@@ -95,11 +95,18 @@ export function Penguin({ className, hat, wave, headphones }: FrontProps) {
   )
 }
 
-/** Pingüino de espaldas (para mirar el amanecer). */
-function BackPenguin({ id }: { id: string }) {
+/**
+ * Pingüino de espaldas (para mirar el amanecer).
+ * `free` es el lado de la aleta suelta; la otra aleta la dibuja la pareja, tomada de la mano.
+ */
+function BackPenguin({ id, free }: { id: string; free: 'left' | 'right' }) {
   return (
     <>
-      <ellipse cx="18" cy="70" rx="8" ry="20" transform="rotate(14 18 70)" fill={NAVY_DARK} />
+      {free === 'left' ? (
+        <ellipse cx="18" cy="70" rx="8" ry="20" transform="rotate(14 18 70)" fill={NAVY_DARK} />
+      ) : (
+        <ellipse cx="82" cy="70" rx="8" ry="20" transform="rotate(-14 82 70)" fill={NAVY_DARK} />
+      )}
       <ellipse cx="38" cy="111" rx="11" ry="5" fill={ORANGE} />
       <ellipse cx="62" cy="111" rx="11" ry="5" fill={ORANGE} />
       <path d={BODY} fill={`url(#${id}-body)`} />
@@ -118,20 +125,19 @@ export function PenguinPair({ className }: { className?: string }) {
       <BodyDefs id={id} />
       <ellipse cx="98" cy="120" rx="86" ry="4" fill="rgba(60,20,40,0.18)" />
 
+      {/* aletas tomadas: salen de cada hombro (escondidas bajo el cuerpo) y se juntan entre los dos */}
+      <ellipse cx="100" cy="76" rx="6.5" ry="19" transform="rotate(-40 100 76)" fill={NAVY} />
+      <ellipse cx="116" cy="85" rx="4.6" ry="11.5" transform="rotate(50 116 85)" fill={NAVY} />
+
       {/* grande */}
       <g transform="translate(8 4)">
-        <BackPenguin id={id} />
+        <BackPenguin id={id} free="left" />
       </g>
 
       {/* chiquita */}
       <g transform="translate(112 42) scale(0.68)">
-        <ellipse cx="82" cy="70" rx="8" ry="20" transform="rotate(-14 82 70)" fill={NAVY_DARK} />
-        <BackPenguin id={id} />
+        <BackPenguin id={id} free="right" />
       </g>
-
-      {/* aletas tomadas */}
-      <ellipse cx="101" cy="84" rx="7" ry="17" transform="rotate(-62 101 84)" fill={NAVY} />
-      <ellipse cx="118" cy="88" rx="5" ry="12" transform="rotate(58 118 88)" fill={NAVY} />
     </svg>
   )
 }

@@ -24,7 +24,7 @@ export const content = {
      */
     siteUrl: 'https://feliz-cumple-allison.pablojamiro2008.workers.dev',
     /** Imagen de vista previa (1200×630), en public/. */
-    image: '/og-image.png',
+    image: '/og-image.png?v=2',
     imageAlt: 'Un sobre con un sello de corazón bajo un cielo estrellado: Para Allison',
   },
 
@@ -85,6 +85,16 @@ export const content = {
     label: 'Mi deseo para ti',
     wish: 'Deseo que nunca te sientas sola, aunque a veces el mundo se venga abajo. Que yo pueda seguir cuidándote, aunque sea desde lejos. Y si algún día me pierdo y olvido quién soy, que seas tú quien me recuerde quién era. Que tus 17 te devuelvan cada sonrisa que el mundo te quitó.',
     back: 'Volver a la carta',
+    /** Botón para volver a escuchar la canción si ya terminó (o seguirla si está en pausa). */
+    replay: 'Escuchar otra vez',
+    resume: 'Seguir escuchando',
+    listen: 'Escuchar nuestra canción',
+  },
+
+  /** Lo que dicen los pingüinitos al tocarlos. */
+  penguin: {
+    says: 'noot noot!',
+    ariaLabel: 'Pingüinito',
   },
 
   signature: {

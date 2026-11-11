@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import { content } from '../content'
 import type { SongAudio } from '../hooks/useSongAudio'
-import { Penguin } from './Penguin'
+import { NootPenguin, Penguin } from './Penguin'
 
 const fmt = (s: number) => {
   const t = Math.max(0, Math.floor(s))
@@ -16,7 +16,9 @@ export function Song({ audio }: { audio: SongAudio }) {
   return (
     <section className="song" aria-labelledby="song-title">
       {/* pingüinito con audífonos: se balancea mientras suena la canción */}
-      <Penguin className={`song-penguin${playing ? ' is-grooving' : ''}`} headphones />
+      <NootPenguin className={`song-penguin${playing ? ' is-grooving' : ''}`} bubble="left">
+        <Penguin headphones />
+      </NootPenguin>
       <p className="song__label">{label}</p>
       <h2 id="song-title" className="song__title">
         {title}

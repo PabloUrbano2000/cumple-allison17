@@ -86,7 +86,7 @@ export function App() {
         </main>
       )}
 
-      {finale && <Finale onBack={closeFinale} />}
+      {finale && <Finale onBack={closeFinale} song={song} />}
 
       {stage !== 'open' && <Envelope ready={fontsReady} opened={stage !== 'closed'} leaving={stage === 'opening'} onOpen={openEnvelope} />}
 

@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { content } from '../content'
-import { PenguinPair } from './Penguin'
+import type { SongAudio } from '../hooks/useSongAudio'
+import { NootPenguin, PenguinPair } from './Penguin'
 
 const LIGHT_COLORS = ['#ffe3a0', '#ffc3d4', '#fff4e4', '#e3cdfa']
 
 type Props = {
   onBack: () => void
+  song: SongAudio
 }
 
 /** Vista final que aparece al soplar la vela: el deseo y la firma sobre un amanecer. */
-export function Finale({ onBack }: Props) {
-  const { label, wish, back } = content.finale
+export function Finale({ onBack, song }: Props) {
+  const { label, wish, back, replay, resume, listen } = content.finale
+  // La canción dura 2:03: lo normal es que ya haya terminado al llegar aquí.
+  const songLabel = song.ended ? replay : song.time > 1 ? resume : listen
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   // Lucecitas que suben despacio, como farolitos.
@@ -68,14 +72,28 @@ export function Finale({ onBack }: Props) {
       </div>
 
       {/* los dos, tomados de la aleta, mirando salir el sol */}
-      <PenguinPair className="finale__penguins" />
+      <NootPenguin className="finale__penguins">
+        <PenguinPair />
+      </NootPenguin>
 
-      <button type="button" className="finale__back" onClick={onBack}>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-        {back}
-      </button>
+      <div className="finale__actions">
+        <button type="button" className="finale__btn" onClick={onBack}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+          {back}
+        </button>
+
+        {/* aparece solo si la canción no está sonando (normalmente, porque ya terminó) */}
+        {!song.playing && (
+          <button type="button" className="finale__btn finale__btn--song" onClick={song.play}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
+            </svg>
+            {songLabel}
+          </button>
+        )}
+      </div>
     </section>
   )
 }

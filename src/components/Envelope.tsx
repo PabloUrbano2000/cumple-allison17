@@ -1,5 +1,5 @@
 import { content } from '../content'
-import { Penguin } from './Penguin'
+import { NootPenguin, Penguin } from './Penguin'
 
 type Props = {
   /** Las fuentes ya cargaron: se muestra con un fade. */
@@ -18,7 +18,9 @@ export function Envelope({ ready, opened, leaving, onOpen }: Props) {
 
       <div className="envelope-stage">
       {/* el pingüinito que trajo la carta */}
-      <Penguin className="envelope-penguin" wave />
+      <NootPenguin className="envelope-penguin" bubble="left">
+        <Penguin wave />
+      </NootPenguin>
       <button
         type="button"
         className={`envelope${opened ? ' is-open' : ''}`}

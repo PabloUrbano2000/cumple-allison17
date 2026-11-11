@@ -1,4 +1,5 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { content } from '../content'
 
 /*
  * Pingüinitos de diseño propio (redondos, tipo plastilina).
@@ -139,5 +140,46 @@ export function PenguinPair({ className }: { className?: string }) {
         <BackPenguin id={id} free="right" />
       </g>
     </svg>
+  )
+}
+
+type NootProps = {
+  className?: string
+  /** Hacia dónde se abre la burbuja, para que no se salga de la pantalla. */
+  bubble?: 'left' | 'right' | 'center'
+  children: ReactNode
+}
+
+/**
+ * Envuelve un pingüino para que se pueda tocar: da un saltito y dice "noot noot!".
+ * Es un detalle escondido para que ella lo descubra.
+ */
+export function NootPenguin({ className, bubble = 'center', children }: NootProps) {
+  const [nooting, setNooting] = useState(false)
+  const timer = useRef(0)
+
+  useEffect(() => () => window.clearTimeout(timer.current), [])
+
+  const noot = () => {
+    setNooting(false)
+    // reinicia la animación aunque lo toque varias veces seguidas
+    requestAnimationFrame(() => setNooting(true))
+    window.clearTimeout(timer.current)
+    timer.current = window.setTimeout(() => setNooting(false), 1600)
+    navigator.vibrate?.(25)
+  }
+
+  return (
+    <button
+      type="button"
+      className={`noot${nooting ? ' is-nooting' : ''}${className ? ` ${className}` : ''}`}
+      onClick={noot}
+      aria-label={content.penguin.ariaLabel}
+    >
+      {children}
+      <span className={`noot__bubble noot__bubble--${bubble}`} aria-live="polite">
+        {nooting ? content.penguin.says : ''}
+      </span>
+    </button>
   )
 }

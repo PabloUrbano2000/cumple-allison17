@@ -642,13 +642,34 @@ button {
 }
 
 .song__fallback {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 12px;
   padding: 6px 10px;
   font-size: 0.85rem;
   color: var(--gold-soft);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.song__fallback-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.song__hint-icon {
+  width: 11px;
+  height: 11px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  fill: currentColor;
 }
 
 /* ───────────── Pie ───────────── */

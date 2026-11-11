@@ -22,6 +22,9 @@ export function Song({ audio }: { audio: SongAudio }) {
 
       {/* Solo aparece si el navegador no dejó que empezara sola al abrir el sobre. */}
       <p className={`song__hint${blocked && !playing ? '' : ' is-hidden'}`} aria-hidden={!blocked || playing}>
+        <svg className="song__hint-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
+        </svg>
         {playHint}
       </p>
 
@@ -72,7 +75,10 @@ export function Song({ audio }: { audio: SongAudio }) {
       </div>
 
       <a className="song__fallback" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">
-        {fallbackLink} ↗
+        {fallbackLink}
+        <svg className="song__fallback-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
+        </svg>
       </a>
     </section>
   )

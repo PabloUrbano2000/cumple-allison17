@@ -75,7 +75,7 @@ export const content = {
     videoId: 'PA2PsADo11E',
     fallbackLink: 'Ver el video en YouTube',
     /** Aviso que aparece solo si el navegador no dejó que la música empezara sola. */
-    playHint: '▶ toca play para escucharla',
+    playHint: 'toca play para escucharla',
     /** La tarjeta de la canción va después de este párrafo (contando desde 1). */
     afterParagraph: 2,
   },

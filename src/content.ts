@@ -48,7 +48,7 @@ export const content = {
       text: 'Sé que pronto te vas, y que la distancia va a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien mayor que cuidó a una pequeña en un mundo que a veces no se entiende, y que quiso protegerla incluso cuando él mismo se estaba perdiendo.',
     },
     {
-      text: 'Y si algún día el tiempo me cambia, quiero que esto quede escrito: siempre fuiste importante para mí. A veces siento que la vida me va alejando de ti, y me acuerdo de las veces que te vi triste y me quedé pensando qué más pude haber hecho. Si alguna vez te fallé, o hice o dije algo que no se parecía a mí, perdóname: eso no era yo...',
+      text: 'Y si algún día el tiempo me cambia, quiero que esto quede escrito: siempre fuiste importante para mí. A veces siento que la vida me va alejando de ti, y me acuerdo de las veces que te vi triste y me quedé pensando qué más pude haber hecho. Si alguna vez te fallé, o hice o dije algo que no se parecía a mí, perdóname: ese no era yo...',
       whisper: true,
     },
     {

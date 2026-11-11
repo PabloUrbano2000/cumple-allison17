@@ -22,7 +22,7 @@ export const content = {
      * WhatsApp necesita una URL absoluta para mostrar la imagen de vista previa:
      * complétala después del primer deploy y vuelve a desplegar.
      */
-    siteUrl: '',
+    siteUrl: 'https://cumple-allison17.pablojamiro2008.workers.dev',
     /** Imagen de vista previa (1200×630), en public/. */
     image: '/og-image.png',
     imageAlt: 'Un sobre con un sello de corazón bajo un cielo estrellado: Para Allison',
@@ -52,7 +52,7 @@ export const content = {
       text: 'Sé que crecer a veces confunde, y que va a haber días en que nada tenga sentido. En esos días, acuérdate de que aquí hay alguien que cree en ti.',
     },
     {
-      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que te cuida desde lejos, que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo de viejo, ya sabes dónde encontrarme.',
+      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que te cuida desde lejos, que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo, ya sabes dónde encontrarme.',
     },
   ] satisfies Paragraph[],
 

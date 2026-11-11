@@ -1,0 +1,648 @@
+:root {
+  --night-1: #0b1030;
+  --night-2: #1d1650;
+  --night-3: #3d2468;
+  --gold: #f2c55c;
+  --gold-soft: #f7dc97;
+  --cream: #fbf3e4;
+  --cream-2: #f3e6cd;
+  --cream-3: #e9d7b6;
+  --pink: #f49ab8;
+  --pink-seal: #e86f97;
+  --pink-dark: #b8395f;
+  --ink: #3d3346;
+  --ink-soft: #7a6f86;
+  --line: 30px;
+  /* posición de la línea del cuaderno dentro de cada renglón (bajo la línea base del texto) */
+  --rule: 24px;
+  --rule-color: rgba(110, 125, 175, 0.2);
+
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--night-1);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ───────────── Cielo ───────────── */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 70% at 50% 110%, rgba(196, 120, 210, 0.28), transparent 60%),
+    linear-gradient(to bottom, var(--night-1) 0%, var(--night-2) 55%, var(--night-3) 100%);
+  pointer-events: none;
+}
+
+.stars,
+.confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.confetti {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* ───────────── Pantalla inicial ───────────── */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.intro.is-ready {
+  opacity: 1;
+}
+
+.intro.is-leaving {
+  animation: fade-out 0.7s ease 0.75s both;
+  pointer-events: none;
+}
+
+.intro__to {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: clamp(3rem, 14vw, 4.5rem);
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 0 24px rgba(242, 197, 92, 0.35);
+}
+
+.intro__subtitle {
+  margin: 10px 0 44px;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #d9d2f0;
+  opacity: 0.85;
+}
+
+.intro__hint {
+  margin: 40px 0 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e8e0ff;
+  animation: soft-blink 2.4s ease-in-out infinite;
+}
+
+.intro.is-leaving .intro__hint {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* ───────────── Sobre ───────────── */
+
+.envelope {
+  --w: min(76vw, 300px);
+  position: relative;
+  width: var(--w);
+  aspect-ratio: 10 / 6.6;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 900px;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s ease;
+  animation: float 4s ease-in-out infinite;
+}
+
+.envelope:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.envelope:disabled {
+  cursor: default;
+}
+
+.envelope.is-open {
+  animation: none;
+}
+
+.envelope > span {
+  position: absolute;
+  display: block;
+}
+
+.envelope__back {
+  inset: 0;
+  border-radius: 8px;
+  background: var(--cream-3);
+  z-index: 1;
+}
+
+.envelope__paper {
+  left: 7%;
+  right: 7%;
+  top: 6%;
+  height: 86%;
+  border-radius: 4px;
+  background-color: #fffaf0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 13px,
+    rgba(120, 130, 180, 0.18) 13px 14px
+  );
+  z-index: 2;
+  transition: transform 0.6s cubic-bezier(0.3, 0.8, 0.3, 1) 0.45s;
+}
+
+.envelope.is-open .envelope__paper {
+  transform: translateY(-38%);
+}
+
+.envelope__front {
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(160deg, var(--cream) 0%, var(--cream-2) 100%);
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+  z-index: 3;
+}
+
+.envelope__front::before,
+.envelope__front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* pliegue inferior */
+.envelope__front::before {
+  background: linear-gradient(to top, rgba(160, 120, 70, 0.1), rgba(160, 120, 70, 0.02));
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+}
+
+/* sombra de los pliegues laterales */
+.envelope__front::after {
+  background: linear-gradient(90deg, rgba(160, 120, 70, 0.08), transparent 30%, transparent 70%, rgba(160, 120, 70, 0.08));
+}
+
+.envelope__flap {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, #f6ead3, #efdcbb);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: 8px 8px 0 0;
+  transform-origin: 50% 0;
+  transform: rotateX(0deg);
+  z-index: 4;
+  transition:
+    transform 0.6s cubic-bezier(0.45, 0.05, 0.3, 1),
+    z-index 0s linear 0.3s;
+}
+
+.envelope.is-open .envelope__flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope__seal {
+  left: 50%;
+  top: 60%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  display: grid !important;
+  place-items: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #fff1f5;
+  background: radial-gradient(circle at 35% 30%, #f59bb8, var(--pink-seal) 60%, #c94f78 100%);
+  box-shadow:
+    0 2px 6px rgba(120, 30, 60, 0.35),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.18);
+  z-index: 5;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.envelope.is-open .envelope__seal {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* ───────────── Carta ───────────── */
+
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 40px 16px calc(56px + env(safe-area-inset-bottom));
+}
+
+.letter {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 36px 24px 32px;
+  border-radius: 6px;
+  color: var(--ink);
+  background-color: var(--cream);
+  background-image: radial-gradient(140% 90% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 70%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.15),
+    0 18px 50px rgba(0, 0, 0, 0.4);
+  animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s both;
+}
+
+.letter__title {
+  margin: 0 0 var(--line);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: clamp(2.3rem, 10vw, 2.9rem);
+  line-height: 1.05;
+  text-align: center;
+  color: var(--pink-dark);
+}
+
+.letter__title:focus {
+  outline: none;
+}
+
+/* Cada párrafo dibuja sus propias líneas de cuaderno, una por renglón,
+   así el texto siempre queda apoyado sobre ellas. El renglón en blanco
+   entre párrafos es padding (no margin) para que también lleve su línea. */
+.letter__p {
+  margin: 0;
+  padding-bottom: var(--line);
+  font-size: 1.02rem;
+  line-height: var(--line);
+  text-wrap: pretty;
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--rule) - 1px),
+    var(--rule-color) calc(var(--rule) - 1px),
+    var(--rule-color) var(--rule),
+    transparent var(--rule)
+  );
+  background-size: 100% var(--line);
+  background-repeat: repeat-y;
+}
+
+.letter__p--whisper {
+  font-style: italic;
+  color: var(--ink-soft);
+  padding-left: 14px;
+  border-left: 2px solid rgba(184, 57, 95, 0.18);
+}
+
+.letter__signature {
+  margin: var(--line) 0 0;
+  text-align: right;
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: var(--pink-dark);
+}
+
+/* ───────────── Torta ───────────── */
+
+.cake-block {
+  margin: 8px 0 var(--line);
+  text-align: center;
+}
+
+.cake-block__prompt {
+  margin: 0 0 6px;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.cake {
+  width: min(64vw, 220px);
+  padding: 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+}
+
+.cake:active {
+  transform: scale(0.97);
+}
+
+.cake svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.cake__fire {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.cake__flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 0.9s ease-in-out infinite;
+}
+
+.cake.is-blown .cake__fire {
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+.cake__smoke {
+  animation: smoke 1.6s ease-out both;
+}
+
+.cake-block__done {
+  min-height: 2.2em;
+  margin: 6px 0 0;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--pink-dark);
+}
+
+.cake-block__done:not(:empty) {
+  animation: pop-in 0.5s ease both;
+}
+
+/* ───────────── Canción ───────────── */
+
+.song {
+  margin: 0 -8px var(--line);
+  padding: 22px 18px 18px;
+  border-radius: 14px;
+  text-align: center;
+  color: #e8e2f6;
+  background: linear-gradient(160deg, #1c1740 0%, #2a1d4f 100%);
+  box-shadow: 0 10px 28px rgba(28, 18, 60, 0.35);
+}
+
+.song__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #b5a9d6;
+}
+
+.song__title {
+  margin: 4px 0 2px;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--gold);
+}
+
+.song__phrase {
+  margin: 0 0 16px;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #d2c9ea;
+}
+
+.song__hint {
+  margin: 0 auto 10px;
+  width: fit-content;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--night-1);
+  background: var(--gold-soft);
+  max-height: 3em;
+  overflow: hidden;
+  animation: hint-pulse 2.2s ease-in-out infinite;
+  transition:
+    opacity 0.5s ease,
+    max-height 0.6s ease 0.3s,
+    margin 0.6s ease 0.3s,
+    padding 0.6s ease 0.3s,
+    visibility 0.9s;
+}
+
+/* Cuando el video empieza a sonar, el aviso se desvanece y se pliega. */
+.song__hint.is-hidden {
+  opacity: 0;
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  visibility: hidden;
+  animation: none;
+}
+
+.song__player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.song__player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.song__fallback {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  color: var(--gold-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ───────────── Pie ───────────── */
+
+.footer {
+  margin: 36px 0 0;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-soft);
+  animation: fade-in 2.2s ease 0.4s both;
+}
+
+/* ───────────── Animaciones ───────────── */
+
+@keyframes soft-blink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(247, 220, 151, 0.45);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 8px rgba(247, 220, 151, 0);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(1, 1) rotate(-2deg);
+  }
+  25% {
+    transform: scale(0.92, 1.08) rotate(2deg);
+  }
+  50% {
+    transform: scale(1.05, 0.94) rotate(-1deg);
+  }
+  75% {
+    transform: scale(0.95, 1.05) rotate(3deg);
+  }
+}
+
+@keyframes smoke {
+  from {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+/* ───────────── Movimiento reducido ───────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  .intro__hint {
+    opacity: 0.8;
+  }
+}

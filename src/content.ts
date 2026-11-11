@@ -22,7 +22,7 @@ export const content = {
      * WhatsApp necesita una URL absoluta para mostrar la imagen de vista previa:
      * complétala después del primer deploy y vuelve a desplegar.
      */
-    siteUrl: 'https://cumple-allison17.pablojamiro2008.workers.dev',
+    siteUrl: 'https://feliz-cumple-allison.pablojamiro2008.workers.dev',
     /** Imagen de vista previa (1200×630), en public/. */
     image: '/og-image.png',
     imageAlt: 'Un sobre con un sello de corazón bajo un cielo estrellado: Para Allison',

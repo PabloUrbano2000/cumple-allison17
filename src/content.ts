@@ -57,8 +57,8 @@ export const content = {
   ] satisfies Paragraph[],
 
   cake: {
-    prompt: 'pide un deseo y sopla la vela 👇',
-    done: '¡Deseo pedido! Que se cumpla ✨',
+    prompt: 'pide un deseo y sopla la vela',
+    done: 'No me lo cuentes… así se cumple',
     ariaBlow: 'Soplar la vela de la torta',
     ariaRelight: 'Volver a encender la vela',
   },
@@ -78,6 +78,13 @@ export const content = {
     playHint: 'toca play para escucharla',
     /** La tarjeta de la canción va después de este párrafo (contando desde 1). */
     afterParagraph: 2,
+  },
+
+  /** Vista final: aparece al soplar la vela, con un amanecer de fondo. */
+  finale: {
+    label: 'Mi deseo para ti',
+    wish: 'Deseo que nunca te sientas sola, aunque a veces parezca que el mundo se viene abajo. Que cuando todo te confunda, encuentres el camino de vuelta a ti. Que yo pueda seguir cuidándote, aunque sea desde lejos, y que si algún día me pierdo, seas tú quien me recuerde quién era. Y que tus 17 te den tantas razones para sonreír que nunca más tenga que verte triste.',
+    back: 'Volver a la carta',
   },
 
   signature: {

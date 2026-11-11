@@ -283,6 +283,15 @@ button {
   min-height: 100vh;
   min-height: 100dvh;
   padding: 40px 16px calc(56px + env(safe-area-inset-bottom));
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.page.is-away {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
 }
 
 .letter {
@@ -339,15 +348,6 @@ button {
   color: var(--ink-soft);
   padding-left: 14px;
   border-left: 2px solid rgba(184, 57, 95, 0.18);
-}
-
-.letter__signature {
-  margin: var(--line) 0 0;
-  text-align: right;
-  font-family: var(--font-hand);
-  font-size: 2rem;
-  line-height: 1.1;
-  color: var(--pink-dark);
 }
 
 /* ───────────── Torta ───────────── */
@@ -409,6 +409,13 @@ button {
   animation: smoke 1.6s ease-out both;
 }
 
+.cake__sparks path {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: spark-rise 1.5s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+}
+
 .cake-block__done {
   min-height: 2.2em;
   margin: 6px 0 0;
@@ -420,7 +427,8 @@ button {
 }
 
 .cake-block__done:not(:empty) {
-  animation: pop-in 0.5s ease both;
+  /* aparece como si se escribiera con pluma, de izquierda a derecha */
+  animation: write-in 1.8s ease-in-out 0.3s both;
 }
 
 /* ───────────── Canción ───────────── */
@@ -674,14 +682,177 @@ button {
 
 /* ───────────── Pie ───────────── */
 
-.footer {
-  margin: 36px 0 0;
+/* ───────────── Amanecer (al soplar la vela) ───────────── */
+
+.sky__dawn {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    rgba(40, 24, 90, 0) 0%,
+    rgba(96, 52, 136, 0.55) 36%,
+    rgba(214, 112, 152, 0.82) 66%,
+    rgba(255, 168, 122, 0.95) 88%,
+    #ffd59c 100%
+  );
+  transition: opacity 2.6s ease;
+}
+
+/* el sol que sale desde abajo */
+.sky__dawn::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -38vmin;
+  width: 96vmin;
+  height: 96vmin;
+  margin-left: -48vmin;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 244, 214, 0.98) 0%,
+    rgba(255, 214, 150, 0.75) 22%,
+    rgba(255, 180, 130, 0.3) 45%,
+    rgba(255, 170, 120, 0) 68%
+  );
+  transform: translateY(34vmin);
+  transition: transform 3.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s;
+}
+
+.sky.is-dawn .sky__dawn {
+  opacity: 1;
+}
+
+.sky.is-dawn .sky__dawn::after {
+  transform: none;
+}
+
+/* ───────────── Vista final ───────────── */
+
+.finale {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* centrado "seguro": si no entra en pantallas bajas, se puede bajar sin cortar el comienzo */
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+  color: #fff6ec;
+}
+
+.finale > .finale__card {
+  margin-top: auto;
+}
+
+.finale > .finale__back {
+  margin-bottom: auto;
+}
+
+.finale__lights {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.finale__lights span {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  box-shadow: 0 0 12px 2px currentColor;
+  opacity: 0;
+  animation-name: float-up;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.finale__card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 30px 24px 26px;
+  border-radius: 22px;
   text-align: center;
-  font-family: var(--font-hand);
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
+  background: rgba(24, 14, 54, 0.4);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 20px 50px rgba(20, 10, 40, 0.35);
+  animation: rise-in 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 1s both;
+}
+
+.finale__label {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   color: var(--gold-soft);
-  animation: fade-in 2.2s ease 0.4s both;
+}
+
+.finale__label:focus {
+  outline: none;
+}
+
+.finale__wish {
+  margin: 16px 0 0;
+  font-style: italic;
+  font-size: 1.04rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.finale__signature {
+  margin: 24px 0 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 1.15;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(242, 197, 92, 0.35);
+  animation: fade-in 1.6s ease 2.4s both;
+}
+
+.finale__footer {
+  margin: 16px 0 0;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: #ffe9d6;
+  animation: fade-in 1.4s ease 3.4s both;
+}
+
+.finale__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px 10px 12px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #fff6ec;
+  background: rgba(24, 14, 54, 0.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  animation: fade-in 1s ease 4s both;
+}
+
+.finale__back svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ───────────── Animaciones ───────────── */
@@ -744,6 +915,49 @@ button {
   }
 }
 
+@keyframes spark-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.2) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(var(--s)) rotate(90deg);
+  }
+}
+
+@keyframes write-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(14px, -55vh);
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-10px, -112vh);
+    opacity: 0;
+  }
+}
+
 @keyframes hint-pulse {
   0%,
   100% {
@@ -799,5 +1013,9 @@ button {
 
   .intro__hint {
     opacity: 0.8;
+  }
+
+  .finale__lights {
+    display: none;
   }
 }

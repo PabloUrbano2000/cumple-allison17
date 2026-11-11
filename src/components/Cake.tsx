@@ -1,4 +1,15 @@
+import type { CSSProperties } from 'react'
 import { content } from '../content'
+
+/** Hacia dónde sube cada chispita (en unidades del SVG) y cuándo sale. */
+const SPARKS = [
+  { dx: -22, dy: -46, scale: 0.9, delay: 0 },
+  { dx: 18, dy: -52, scale: 1.1, delay: 0.12 },
+  { dx: -8, dy: -64, scale: 0.7, delay: 0.25 },
+  { dx: 28, dy: -34, scale: 0.8, delay: 0.35 },
+  { dx: -30, dy: -30, scale: 0.6, delay: 0.45 },
+  { dx: 6, dy: -40, scale: 1, delay: 0.55 },
+]
 
 type Props = {
   blown: boolean
@@ -93,6 +104,26 @@ export function Cake({ blown, onToggle }: Props) {
           {blown && (
             <g className="cake__smoke" fill="none" stroke="#d8d2e6" strokeWidth="2.2" strokeLinecap="round">
               <path d="M110 34 C104 26 116 20 109 11 C104 5 112 0 110 -6" />
+            </g>
+          )}
+
+          {/* chispitas doradas que suben desde la mecha */}
+          {blown && (
+            <g className="cake__sparks" fill="#f2c55c">
+              {SPARKS.map((s, i) => (
+                <path
+                  key={i}
+                  d="M110 30 l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4 Z"
+                  style={
+                    {
+                      '--dx': `${s.dx}px`,
+                      '--dy': `${s.dy}px`,
+                      '--s': s.scale,
+                      animationDelay: `${s.delay}s`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
             </g>
           )}
         </svg>

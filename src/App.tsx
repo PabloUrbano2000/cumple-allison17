@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { content } from './content'
 import { useReducedMotion } from './hooks/useReducedMotion'
 import { useFontsReady } from './hooks/useFontsReady'
@@ -7,6 +7,7 @@ import { StarsCanvas } from './components/StarsCanvas'
 import { Confetti, type ConfettiHandle } from './components/Confetti'
 import { Envelope } from './components/Envelope'
 import { Letter } from './components/Letter'
+import { Finale } from './components/Finale'
 
 type Stage = 'closed' | 'opening' | 'open'
 
@@ -16,12 +17,19 @@ export function App() {
   const song = useSongAudio(content.song.audioSrc, { title: content.song.title, artist: content.song.audioArtist })
   const [stage, setStage] = useState<Stage>('closed')
   const [blown, setBlown] = useState(false)
-  const [hasBlown, setHasBlown] = useState(false)
+  const [finale, setFinale] = useState(false)
   const confetti = useRef<ConfettiHandle>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const timers = useRef<number[]>([])
+  const finaleTimer = useRef(0)
 
-  useEffect(() => () => timers.current.forEach(clearTimeout), [])
+  useEffect(
+    () => () => {
+      timers.current.forEach(clearTimeout)
+      window.clearTimeout(finaleTimer.current)
+    },
+    [],
+  )
 
   const openEnvelope = () => {
     if (stage !== 'closed') return
@@ -46,24 +54,39 @@ export function App() {
   const toggleCandle = (origin: { x: number; y: number }) => {
     const next = !blown
     setBlown(next)
+    window.clearTimeout(finaleTimer.current)
     if (next) {
-      setHasBlown(true)
       confetti.current?.burst({ ...origin, count: 110 })
+      // Dejamos ver la vela apagada y el mensaje escribiéndose, y después amanece.
+      finaleTimer.current = window.setTimeout(
+        () => {
+          setFinale(true)
+          confetti.current?.burst({ y: window.innerHeight * 0.3, count: 80 })
+        },
+        reducedMotion ? 400 : 3200,
+      )
     }
   }
 
+  const closeFinale = useCallback(() => {
+    setFinale(false)
+    requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.cake')?.focus({ preventScroll: true }))
+  }, [])
+
   return (
     <>
-      <div className="sky" aria-hidden="true">
+      <div className={`sky${finale ? ' is-dawn' : ''}`} aria-hidden="true">
         <StarsCanvas reducedMotion={reducedMotion} />
+        <div className="sky__dawn" />
       </div>
 
       {stage !== 'closed' && (
-        <main className="page">
+        <main className={`page${finale ? ' is-away' : ''}`} inert={finale}>
           <Letter titleRef={titleRef} blown={blown} onToggleCandle={toggleCandle} song={song} />
-          {hasBlown && <footer className="footer">{content.footer}</footer>}
         </main>
       )}
+
+      {finale && <Finale onBack={closeFinale} />}
 
       {stage !== 'open' && <Envelope ready={fontsReady} opened={stage !== 'closed'} leaving={stage === 'opening'} onOpen={openEnvelope} />}
 

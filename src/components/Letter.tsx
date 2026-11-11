@@ -26,10 +26,6 @@ export function Letter({ titleRef, blown, onToggleCandle, song }: Props) {
       ))}
 
       <Cake blown={blown} onToggle={onToggleCandle} />
-
-      <p className="letter__signature">
-        {content.signature.closing} {content.signature.name}
-      </p>
     </article>
   )
 }

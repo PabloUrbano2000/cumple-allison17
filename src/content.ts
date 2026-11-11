@@ -39,7 +39,10 @@ export const content = {
 
   paragraphs: [
     {
-      text: 'Hoy celebro que existas. Te conocí cuando tenías 15 y ahora cumples 17. En este tiempo te vi crecer, cambiar y volverte una persona increíble, y no sabes lo orgulloso que estoy de ti.',
+      text: 'Hoy celebro que existas. Te conocí cuando tenías 14 y ahora cumples 17. En este tiempo te vi crecer, cambiar y volverte una persona increíble, y no sabes lo orgulloso que estoy de ti.',
+    },
+    {
+      text: '¿Te acuerdas del pingüino? Lo compré para tus 15 y recién pude dártelo a los 16. Lo elegí para que tuvieras algo que te acompañe cuando yo no pueda estar.',
     },
     {
       text: 'Sé que pronto te vas, y que la distancia va a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien mayor que cuidó a una pequeña en un mundo que a veces no se entiende, y que quiso protegerla incluso cuando él mismo se estaba perdiendo. Lo único que quería era que ella supiera que no estaba sola.',
@@ -77,7 +80,7 @@ export const content = {
     /** Aviso que aparece solo si el navegador no dejó que la música empezara sola. */
     playHint: 'toca play para escucharla',
     /** La tarjeta de la canción va después de este párrafo (contando desde 1). */
-    afterParagraph: 2,
+    afterParagraph: 3,
   },
 
   /** Vista final: aparece al soplar la vela, con un amanecer de fondo. */

@@ -314,6 +314,29 @@ button {
   animation: penguin-hop 0.45s ease-out 3;
 }
 
+.letter-penguin {
+  position: absolute;
+  top: -60px;
+  right: 26px;
+  width: 54px;
+  pointer-events: none;
+  transform-origin: 50% 90%;
+  animation: penguin-read 5s ease-in-out infinite;
+}
+
+.song-penguin {
+  position: absolute;
+  top: -54px;
+  right: 10px;
+  width: 50px;
+  pointer-events: none;
+  transform-origin: 50% 90%;
+}
+
+.song-penguin.is-grooving {
+  animation: penguin-groove 0.9s ease-in-out infinite alternate;
+}
+
 .finale__penguins {
   flex: none;
   width: 150px;
@@ -328,7 +351,7 @@ button {
   z-index: 1;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 40px 16px calc(56px + env(safe-area-inset-bottom));
+  padding: 72px 16px calc(56px + env(safe-area-inset-bottom));
   transition:
     opacity 0.9s ease,
     transform 0.9s ease;
@@ -480,6 +503,7 @@ button {
 /* ───────────── Canción ───────────── */
 
 .song {
+  position: relative;
   margin: 0 -8px var(--line);
   padding: 22px 18px 18px;
   border-radius: 14px;
@@ -509,6 +533,7 @@ button {
 
 .song__phrase {
   margin: 0 0 16px;
+  text-wrap: balance;
   font-style: italic;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -958,6 +983,30 @@ button {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes penguin-read {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20%,
+  45% {
+    transform: rotate(-7deg);
+  }
+  65%,
+  85% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes penguin-groove {
+  from {
+    transform: rotate(-7deg) translateY(0);
+  }
+  to {
+    transform: rotate(7deg) translateY(-2px);
   }
 }
 

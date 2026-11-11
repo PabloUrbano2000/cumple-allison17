@@ -2,6 +2,7 @@ import { Fragment, type Ref } from 'react'
 import { content } from '../content'
 import type { SongAudio } from '../hooks/useSongAudio'
 import { Cake } from './Cake'
+import { Penguin } from './Penguin'
 import { Song } from './Song'
 
 type Props = {
@@ -14,6 +15,8 @@ type Props = {
 export function Letter({ titleRef, blown, onToggleCandle, song }: Props) {
   return (
     <article className="letter">
+      {/* pingüinito sentado en el borde de la hoja, leyendo con ella */}
+      <Penguin className="letter-penguin" />
       <h1 className="letter__title" ref={titleRef} tabIndex={-1}>
         {content.title}
       </h1>

@@ -34,10 +34,12 @@ type FrontProps = {
   hat?: boolean
   /** Saluda moviendo una aleta. */
   wave?: boolean
+  /** Audífonos para escuchar la canción. */
+  headphones?: boolean
 }
 
 /** Pingüino de frente. */
-export function Penguin({ className, hat, wave }: FrontProps) {
+export function Penguin({ className, hat, wave, headphones }: FrontProps) {
   const id = useId().replace(/:/g, '')
   return (
     <svg className={className} viewBox="0 -14 100 134" aria-hidden="true">
@@ -69,6 +71,16 @@ export function Penguin({ className, hat, wave }: FrontProps) {
       <ellipse cx="34" cy="58" rx="5" ry="3" fill="#f49ab8" opacity="0.6" />
       <ellipse cx="66" cy="58" rx="5" ry="3" fill="#f49ab8" opacity="0.6" />
       <path d="M44.5 55 Q50 51.5 55.5 55 Q53 61 50 61.5 Q47 61 44.5 55 Z" fill={ORANGE} />
+
+      {headphones && (
+        <g>
+          <path d="M21 42 C19 2 81 2 79 42" fill="none" stroke="#f49ab8" strokeWidth="5" strokeLinecap="round" />
+          <rect x="11" y="34" width="15" height="22" rx="7" fill="#e37fa0" />
+          <rect x="14" y="37" width="9" height="16" rx="4.5" fill="#f7b3c9" />
+          <rect x="74" y="34" width="15" height="22" rx="7" fill="#e37fa0" />
+          <rect x="77" y="37" width="9" height="16" rx="4.5" fill="#f7b3c9" />
+        </g>
+      )}
 
       {hat && (
         <g transform="rotate(16 66 14)">

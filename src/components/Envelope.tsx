@@ -1,4 +1,5 @@
 import { content } from '../content'
+import { Penguin } from './Penguin'
 
 type Props = {
   /** Las fuentes ya cargaron: se muestra con un fade. */
@@ -15,6 +16,9 @@ export function Envelope({ ready, opened, leaving, onOpen }: Props) {
       <h1 className="intro__to">{to}</h1>
       <p className="intro__subtitle">{subtitle}</p>
 
+      <div className="envelope-stage">
+      {/* el pingüinito que trajo la carta */}
+      <Penguin className="envelope-penguin" wave />
       <button
         type="button"
         className={`envelope${opened ? ' is-open' : ''}`}
@@ -31,6 +35,7 @@ export function Envelope({ ready, opened, leaving, onOpen }: Props) {
           ♥
         </span>
       </button>
+      </div>
 
       <p className="intro__hint" aria-hidden="true">
         {hint}

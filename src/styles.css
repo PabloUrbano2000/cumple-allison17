@@ -275,6 +275,52 @@ button {
   transform: scale(0.6);
 }
 
+/* ───────────── Pingüinitos ───────────── */
+
+.envelope-stage {
+  position: relative;
+}
+
+.envelope-penguin {
+  position: absolute;
+  z-index: 2;
+  right: -30px;
+  bottom: -16px;
+  width: 58px;
+  pointer-events: none;
+  animation: penguin-bob 3.2s ease-in-out infinite;
+}
+
+.penguin__wave {
+  transform-box: fill-box;
+  transform-origin: 50% 12%;
+  animation: penguin-wave 1.8s ease-in-out infinite;
+}
+
+.cake-stage {
+  position: relative;
+  display: inline-block;
+}
+
+.cake-penguin {
+  position: absolute;
+  left: -24px;
+  bottom: 6px;
+  width: 54px;
+  pointer-events: none;
+}
+
+.cake-penguin.is-cheering {
+  animation: penguin-hop 0.45s ease-out 3;
+}
+
+.finale__penguins {
+  flex: none;
+  width: 150px;
+  filter: drop-shadow(0 6px 10px rgba(60, 20, 50, 0.25));
+  animation: fade-in 1.6s ease 3.6s both;
+}
+
 /* ───────────── Carta ───────────── */
 
 .page {
@@ -842,7 +888,7 @@ button {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  animation: fade-in 1s ease 4s both;
+  animation: fade-in 1s ease 4.6s both;
 }
 
 .finale__back svg {
@@ -912,6 +958,41 @@ button {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes penguin-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(3deg);
+  }
+}
+
+@keyframes penguin-wave {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+  70%,
+  90% {
+    transform: rotate(-38deg);
+  }
+  80% {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes penguin-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-14px) rotate(-4deg);
   }
 }
 

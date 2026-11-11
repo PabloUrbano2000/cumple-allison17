@@ -92,5 +92,5 @@ export const content = {
     name: 'Mandy 💛',
   },
 
-  footer: '✦ feliz vuelta al sol ✦',
+  footer: 'noot noot ♡',
 }

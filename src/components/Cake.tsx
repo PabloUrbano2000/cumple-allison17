@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { content } from '../content'
+import { Penguin } from './Penguin'
 
 /** Hacia dónde sube cada chispita (en unidades del SVG) y cuándo sale. */
 const SPARKS = [
@@ -23,6 +24,9 @@ export function Cake({ blown, onToggle }: Props) {
     <div className="cake-block">
       <p className="cake-block__prompt">{prompt}</p>
 
+      <div className="cake-stage">
+      {/* pingüinito de fiesta que celebra cuando se apaga la vela */}
+      <Penguin className={`cake-penguin${blown ? ' is-cheering' : ''}`} hat />
       <button
         type="button"
         className={`cake${blown ? ' is-blown' : ''}`}
@@ -128,6 +132,7 @@ export function Cake({ blown, onToggle }: Props) {
           )}
         </svg>
       </button>
+      </div>
 
       <p className="cake-block__done" aria-live="polite">
         {blown ? done : ''}

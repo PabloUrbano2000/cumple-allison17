@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { content } from '../content'
+import { PenguinPair } from './Penguin'
 
 const LIGHT_COLORS = ['#ffe3a0', '#ffc3d4', '#fff4e4', '#e3cdfa']
 
@@ -65,6 +66,9 @@ export function Finale({ onBack }: Props) {
         </p>
         <p className="finale__footer">{content.footer}</p>
       </div>
+
+      {/* los dos, tomados de la aleta, mirando salir el sol */}
+      <PenguinPair className="finale__penguins" />
 
       <button type="button" className="finale__back" onClick={onBack}>
         <svg viewBox="0 0 24 24" aria-hidden="true">

@@ -45,17 +45,14 @@ export const content = {
       text: '¿Te acuerdas del pingüino? Lo compré para tus 15 y recién pude dártelo a los 16. Lo elegí para que tuvieras algo que te acompañe cuando yo no pueda estar.',
     },
     {
-      text: 'Sé que pronto te vas, y que la distancia va a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien mayor que cuidó a una pequeña en un mundo que a veces no se entiende, y que quiso protegerla incluso cuando él mismo se estaba perdiendo. Lo único que quería era que ella supiera que no estaba sola.',
+      text: 'Sé que pronto te vas, y que la distancia va a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien mayor que cuidó a una pequeña en un mundo que a veces no se entiende, y que quiso protegerla incluso cuando él mismo se estaba perdiendo.',
     },
     {
       text: 'Y si algún día el tiempo me cambia, quiero que esto quede escrito: siempre fuiste importante para mí. A veces siento que la vida me va alejando de ti, y me acuerdo de las veces que te vi triste y me quedé pensando qué más pude haber hecho. Si alguna vez te fallé, o hice o dije algo que no se parecía a mí, perdóname: eso no era yo. Esto sí.',
       whisper: true,
     },
     {
-      text: 'Sé que crecer a veces confunde, y que va a haber días en que nada tenga sentido. En esos días, acuérdate de que aquí hay alguien que cree en ti.',
-    },
-    {
-      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que te cuida desde lejos, que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo, ya sabes dónde encontrarme.',
+      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo, ya sabes dónde encontrarme.',
     },
   ] satisfies Paragraph[],
 

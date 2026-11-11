@@ -17,7 +17,7 @@
   --rule: 24px;
   --rule-color: rgba(110, 125, 175, 0.2);
 
-  --font-hand: 'Caveat', 'Segoe Script', cursive;
+  --font-hand: 'Dancing Script', 'Segoe Script', cursive;
   --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
 
   color-scheme: dark;
@@ -413,7 +413,8 @@ button {
   min-height: 2.2em;
   margin: 6px 0 0;
   font-family: var(--font-hand);
-  font-size: 1.6rem;
+  font-size: clamp(1.3rem, 6vw, 1.6rem);
+  text-wrap: balance;
   line-height: 1.2;
   color: var(--pink-dark);
 }

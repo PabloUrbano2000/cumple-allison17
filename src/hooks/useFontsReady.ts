@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const FONTS = ['700 1em Caveat', '400 1em Lora', 'italic 400 1em Lora']
+const FONTS = ['700 1em "Dancing Script"', '400 1em Lora', 'italic 400 1em Lora']
 
 /**
  * true cuando las fuentes de Google ya cargaron (o pasó el tiempo límite),

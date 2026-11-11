@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { content } from './content'
 import { useReducedMotion } from './hooks/useReducedMotion'
 import { useFontsReady } from './hooks/useFontsReady'
+import { useSongAudio } from './hooks/useSongAudio'
 import { StarsCanvas } from './components/StarsCanvas'
 import { Confetti, type ConfettiHandle } from './components/Confetti'
 import { Envelope } from './components/Envelope'
@@ -12,6 +13,7 @@ type Stage = 'closed' | 'opening' | 'open'
 export function App() {
   const reducedMotion = useReducedMotion()
   const fontsReady = useFontsReady()
+  const song = useSongAudio(content.song.audioSrc, { title: content.song.title, artist: content.song.audioArtist })
   const [stage, setStage] = useState<Stage>('closed')
   const [blown, setBlown] = useState(false)
   const [hasBlown, setHasBlown] = useState(false)
@@ -23,6 +25,8 @@ export function App() {
 
   const openEnvelope = () => {
     if (stage !== 'closed') return
+    // La música arranca en este mismo toque: es lo que permite que suene también en celular.
+    song.play()
     setStage('opening')
     window.scrollTo(0, 0)
     timers.current.push(
@@ -56,7 +60,7 @@ export function App() {
 
       {stage !== 'closed' && (
         <main className="page">
-          <Letter titleRef={titleRef} blown={blown} onToggleCandle={toggleCandle} />
+          <Letter titleRef={titleRef} blown={blown} onToggleCandle={toggleCandle} song={song} />
           {hasBlown && <footer className="footer">{content.footer}</footer>}
         </main>
       )}

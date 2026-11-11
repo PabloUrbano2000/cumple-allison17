@@ -1,44 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { content } from '../content'
+import type { SongAudio } from '../hooks/useSongAudio'
 
-const YT_ORIGIN = /^https:\/\/www\.youtube(-nocookie)?\.com$/
+const fmt = (s: number) => {
+  const t = Math.max(0, Math.floor(s))
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`
+}
 
-export function Song() {
+export function Song({ audio }: { audio: SongAudio }) {
   const { label, title, phrase, videoId, fallbackLink, playHint } = content.song
-  const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [playing, setPlaying] = useState(false)
-
-  // El iframe se monta recién al abrir el sobre: ese toque cuenta como interacción,
-  // así que probamos con autoplay. Si el navegador lo bloquea, queda el reproductor
-  // para darle play, con un aviso que desaparece cuando el video empieza a sonar.
-  const origin = typeof window !== 'undefined' ? window.location.origin : ''
-  const src =
-    `https://www.youtube-nocookie.com/embed/${videoId}` +
-    `?autoplay=1&playsinline=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`
-
-  useEffect(() => {
-    const onMessage = (e: MessageEvent) => {
-      if (!YT_ORIGIN.test(e.origin) || e.source !== iframeRef.current?.contentWindow) return
-      let data: { event?: string; info?: unknown }
-      try {
-        data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
-      } catch {
-        return
-      }
-      const state =
-        data?.event === 'onStateChange'
-          ? data.info
-          : (data?.info as { playerState?: number } | undefined)?.playerState
-      if (state === 1) setPlaying(true) // 1 = reproduciendo
-    }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
-  }, [])
-
-  // Pide al reproductor que nos avise de sus cambios de estado.
-  const subscribe = () => {
-    iframeRef.current?.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: 'song', channel: 'widget' }), '*')
-  }
+  const { playing, blocked, time, duration, toggle, seek } = audio
+  const progress = duration > 0 ? (time / duration) * 100 : 0
 
   return (
     <section className="song" aria-labelledby="song-title">
@@ -48,20 +20,55 @@ export function Song() {
       </h2>
       <p className="song__phrase">{phrase}</p>
 
-      <p className={`song__hint${playing ? ' is-hidden' : ''}`} aria-hidden={playing}>
+      {/* Solo aparece si el navegador no dejó que empezara sola al abrir el sobre. */}
+      <p className={`song__hint${blocked && !playing ? '' : ' is-hidden'}`} aria-hidden={!blocked || playing}>
         {playHint}
       </p>
 
-      <div className="song__player">
-        <iframe
-          ref={iframeRef}
-          src={src}
-          title={`${title} — video de YouTube`}
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-          onLoad={subscribe}
-        />
+      <div className={`player${playing ? ' is-playing' : ''}`}>
+        <button
+          type="button"
+          className="player__btn"
+          onClick={toggle}
+          aria-label={playing ? `Pausar ${title}` : `Reproducir ${title}`}
+        >
+          {playing ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="6" y="5" width="4" height="14" rx="1.2" />
+              <rect x="14" y="5" width="4" height="14" rx="1.2" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
+            </svg>
+          )}
+        </button>
+
+        <div className="player__track">
+          <input
+            type="range"
+            className="player__range"
+            min={0}
+            max={duration || 0}
+            step={0.1}
+            value={Math.min(time, duration || 0)}
+            onChange={(e) => seek(Number(e.target.value))}
+            disabled={!duration}
+            aria-label={`Avance de ${title}`}
+            aria-valuetext={`${fmt(time)} de ${fmt(duration)}`}
+            style={{ '--p': `${progress}%` } as CSSProperties}
+          />
+          <div className="player__times" aria-hidden="true">
+            <span>{fmt(time)}</span>
+            <span className="player__bars">
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+            <span>{duration ? fmt(duration) : '–:––'}</span>
+          </div>
+        </div>
       </div>
 
       <a className="song__fallback" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">

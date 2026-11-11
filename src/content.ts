@@ -39,20 +39,20 @@ export const content = {
 
   paragraphs: [
     {
-      text: 'Hoy celebro que existas, y que la vida haya hecho que nuestros caminos se crucen otra vez.',
+      text: 'Hoy celebro que existas. Te conocí cuando tenías 15 y ahora cumples 17. En este tiempo te vi crecer, cambiar y volverte una persona increíble, y no sabes lo orgulloso que estoy de ti.',
     },
     {
-      text: 'Sé que pronto te vas, y que la distancia va a volver a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien que sabe que el tiempo y la distancia lo van a cambiar todo, pero que igual quiere dejar claro que lo que sintió fue real.',
+      text: 'Sé que pronto te vas, y que la distancia va a ponerse entre nosotros. No te voy a mentir: me cuesta. Por eso elegí esta canción. Es de alguien mayor que cuidó a una pequeña en un mundo que a veces no se entiende, y que quiso protegerla incluso cuando él mismo se estaba perdiendo. Lo único que quería era que ella supiera que no estaba sola.',
     },
     {
-      text: 'Y si algún día el tiempo me cambia, o me pierdo un poco de quien soy hoy, quiero que esto quede escrito: lo que te quise fue verdad. Lo que no te supe decir, lo que salió mal, eso no era yo. Esto sí.',
+      text: 'Y si algún día el tiempo me cambia, quiero que esto quede escrito: siempre fuiste importante para mí. A veces siento que la vida me va alejando de ti, y me acuerdo de las veces que te vi triste y me quedé pensando qué más pude haber hecho. Si alguna vez te fallé, o hice o dije algo que no se parecía a mí, perdóname: eso no era yo. Esto sí.',
       whisper: true,
     },
     {
-      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí hubo y hay alguien que te quiere bien, que celebra todo lo bueno que te pase y que siempre va a estar feliz de saber de ti.',
+      text: 'Sé que crecer a veces confunde, y que va a haber días en que nada tenga sentido. En esos días, acuérdate de que aquí hay alguien que cree en ti.',
     },
     {
-      text: 'Que este nuevo año te dé todo lo que mereces, que es muchísimo.',
+      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que te cuida desde lejos, que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo de viejo, ya sabes dónde encontrarme.',
     },
   ] satisfies Paragraph[],
 
@@ -66,18 +66,23 @@ export const content = {
   song: {
     label: 'Nuestra canción',
     title: 'I Remember You',
-    phrase: 'cada vez que la escuches, acuérdate de mí un ratito',
+    phrase: 'cada vez que la escuches, acuérdate de mí',
+    /** Archivo de audio en public/. Empieza a sonar al tocar el sobre. */
+    audioSrc: '/remember-you.mp3',
+    /** Texto para la pantalla de bloqueo del celular mientras suena. */
+    audioArtist: 'para Allison 💛',
+    /** Video de YouTube para el link de respaldo. */
     videoId: 'PA2PsADo11E',
-    fallbackLink: 'Abrir en YouTube',
-    /** Aviso que se muestra hasta que el video empieza a sonar. */
-    playHint: '▶ dale play mientras lees',
+    fallbackLink: 'Ver el video en YouTube',
+    /** Aviso que aparece solo si el navegador no dejó que la música empezara sola. */
+    playHint: '▶ toca play para escucharla',
     /** La tarjeta de la canción va después de este párrafo (contando desde 1). */
     afterParagraph: 2,
   },
 
   signature: {
     closing: 'Con cariño,',
-    name: 'Pablito 💛',
+    name: 'Mandy 💛',
   },
 
   footer: '✦ feliz vuelta al sol ✦',

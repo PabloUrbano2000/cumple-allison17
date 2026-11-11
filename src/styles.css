@@ -490,28 +490,161 @@ button {
   animation: none;
 }
 
-.song__player {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #000;
+/* Reproductor propio */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  text-align: left;
 }
 
-.song__player iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.player__btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
   border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--night-1);
+  background: radial-gradient(circle at 35% 30%, #ffe3a0, var(--gold) 70%);
+  box-shadow: 0 4px 14px rgba(242, 197, 92, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.player__btn:active {
+  transform: scale(0.94);
+}
+
+.player__btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.player__track {
+  flex: 1;
+  min-width: 0;
+}
+
+.player__range {
+  --p: 0%;
+  display: block;
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.player__range:disabled {
+  cursor: default;
+}
+
+.player__range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--gold) var(--p), rgba(255, 255, 255, 0.18) var(--p));
+}
+
+.player__range::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--gold) var(--p), rgba(255, 255, 255, 0.18) var(--p));
+}
+
+.player__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  box-shadow: 0 0 0 4px rgba(242, 197, 92, 0.2);
+}
+
+.player__range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  box-shadow: 0 0 0 4px rgba(242, 197, 92, 0.2);
+}
+
+.player__times {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: #b5a9d6;
+}
+
+/* Barritas que bailan mientras suena */
+.player__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.player.is-playing .player__bars {
+  opacity: 1;
+}
+
+.player__bars i {
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gold);
+  transform-origin: bottom;
+  transform: scaleY(0.3);
+}
+
+.player.is-playing .player__bars i {
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+.player.is-playing .player__bars i:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.player.is-playing .player__bars i:nth-child(3) {
+  animation-delay: -0.6s;
+}
+
+.player.is-playing .player__bars i:nth-child(4) {
+  animation-delay: -0.15s;
+}
+
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
 }
 
 .song__fallback {
   display: inline-block;
   margin-top: 12px;
   padding: 6px 10px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--gold-soft);
   text-decoration: underline;
   text-underline-offset: 3px;

@@ -52,7 +52,7 @@ export const content = {
       whisper: true,
     },
     {
-      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti. Y si algún día necesitas algo, aunque sea un consejo, ya sabes dónde encontrarme.',
+      text: 'Eso es lo que quiero que te lleves: pase lo que pase, vayas donde vayas, aquí siempre vas a tener a alguien que celebra todo lo bueno que te pase y que va a estar feliz de saber de ti.',
     },
   ] satisfies Paragraph[],
 
